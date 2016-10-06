@@ -31,4 +31,13 @@
   <img *ngIf="imagepath"  [src]="imagepath" width="100%" />
   <div>{{imagepath}}</div>
 
+
+  <button (click)="opencamera()" ion-button color="primary" >Click a Picture</button>
+
+  <img *ngIf="imagecapturepath"  [src]="imagecapturepath" width="100%" />
+
+  <button (click)="cameraupload()" ion-button color="primary" >Upload in server </button>
+  <button (click)="filechooser()" ion-button color="primary" >choose Files </button>
+
+
 </ion-content>
