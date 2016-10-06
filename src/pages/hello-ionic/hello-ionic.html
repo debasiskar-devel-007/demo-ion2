@@ -39,5 +39,17 @@
   <button (click)="cameraupload()" ion-button color="primary" >Upload in server </button>
   <button (click)="filechooser()" ion-button color="primary" >choose Files </button>
 
+  <button (click)="opencameraforvideo()" ion-button color="primary" >capture a video</button>
+
+  <img *ngIf="imagecapturepath"  [src]="imagecapturepath" width="100%" />
+
+  <video *ngIf="videocapturepath" width="320" height="240" controls>
+    <source [src]="videocapturepath" type="video/mp4">
+
+    Your browser does not support the video tag.
+  </video>
+
+  <button (click)="camerauploadvideo()" ion-button color="primary" >Upload  video  in server </button>
+
 
 </ion-content>

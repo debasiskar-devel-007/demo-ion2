@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {ImagePicker, CaptureImageOptions, MediaFile, CaptureError} from 'ionic-native';
+import {ImagePicker, CaptureImageOptions, MediaFile, CaptureError, CaptureVideoOptions} from 'ionic-native';
 //import * as $ from "jquery";
 import { Transfer } from 'ionic-native';
 import { MediaCapture } from 'ionic-native';
@@ -12,11 +12,13 @@ import {File} from 'ionic-native';
 export class HelloIonicPage {
     imagepath:any;
     imagecapturepath:any;
+    videocapturepath:any;
 
 
   constructor() {
     this.imagepath=false;
     this.imagecapturepath=false;
+    this.videocapturepath=false;
 
   }
 
@@ -117,6 +119,33 @@ export class HelloIonicPage {
             );
     }
 
+    opencameraforvideo(){
+
+        let options: CaptureVideoOptions = { limit: 1 };
+        MediaCapture.captureVideo(options)
+            .then(
+                (data: MediaFile[]) => {
+                    this.videocapturepath=data[0]['fullPath'];
+                    alert(data[0]['fullPath'])
+
+                    var x:any;
+                    for(x in data[0]){
+                        alert(x+'=='+data[0][x]);
+                    }
+
+                },
+                (err: CaptureError) => {
+                    alert(err)
+
+                    var x:any;
+                    for(x in err){
+                        alert(x+'=='+err[x]);
+                    }
+
+                }
+            );
+    }
+
     cameraupload(){
         const fileTransfer = new Transfer();
         var options: any;
@@ -130,6 +159,41 @@ export class HelloIonicPage {
         }
         //fileTransfer.upload(this.imagepath, "http://torqkd.com/user/ajs2/testfileupload", options)
         fileTransfer.upload(this.imagecapturepath, "http://166.62.34.31:2/uploads", options)
+            .then((data) => {
+                // success
+
+                alert(data);
+                var i:any;
+                for(i in data){
+                    alert(i+'=='+data[i]);
+                }
+            }, (err) => {
+                // error
+
+                alert('error');
+                alert(err);
+                var i:any;
+                for(i in err){
+                    alert(i+'=='+err[i]);
+                }
+                // error
+
+            })
+    }
+
+    camerauploadvideo(){
+        const fileTransfer = new Transfer();
+        var options: any;
+
+        options = {
+            fileKey: 'file',
+            //fileName: this.imagepath.toString().replace('file:///data/data/com.ionicframework.demo866280/cache/',''),
+            fileName: this.videocapturepath.toString(),
+            headers: {}
+
+        }
+        //fileTransfer.upload(this.imagepath, "http://torqkd.com/user/ajs2/testfileupload", options)
+        fileTransfer.upload(this.videocapturepath, "http://166.62.34.31:2/uploads", options)
             .then((data) => {
                 // success
 
