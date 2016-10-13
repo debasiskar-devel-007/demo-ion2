@@ -4,6 +4,10 @@ import {ImagePicker, CaptureImageOptions, MediaFile, CaptureError, CaptureVideoO
 import { Transfer } from 'ionic-native';
 import { MediaCapture } from 'ionic-native';
 import {File} from 'ionic-native';
+import { SocialSharing } from 'ionic-native';
+import {InAppBrowser} from 'ionic-native';
+import {StreamingMedia, StreamingVideoOptions} from 'ionic-native';
+
 
 
 @Component({
@@ -220,6 +224,27 @@ export class HelloIonicPage {
         var cordova: any;
         const fs:string = cordova.file.dataDirectory;
         File.checkDir(fs, 'files').then(_ => console.log('yay')).catch(err => console.log('boooh'));
+    }
+
+    sharebyfacebook(){
+
+        let browser = new InAppBrowser('https://www.facebook.com/', '_system');
+        //browser.executeScript(...);
+        //browser.insertCSS(...);
+        //InAppBrowser.open('http://apache.org', '_blank', 'location=yes');
+
+    }
+    playyoutube(){
+
+        let options: StreamingVideoOptions = {
+            successCallback: () => { alert('Video played') },
+            errorCallback: (e) => { alert('Error streaming') },
+            orientation: 'landscape'
+        };
+
+        //noinspection TypeScriptValidateTypes
+        //StreamingMedia.playVideo("http://torqkd.com/uploads/video/converted/1475231341_1336827052.mp4", options);
+        StreamingMedia.playVideo("https://youtu.be/imIIk8pRVgI", options);
     }
 
 
