@@ -7,6 +7,7 @@ import {File} from 'ionic-native';
 import { SocialSharing } from 'ionic-native';
 import {InAppBrowser} from 'ionic-native';
 import {StreamingMedia, StreamingVideoOptions} from 'ionic-native';
+import { Camera } from 'ionic-native';
 
 
 
@@ -247,5 +248,25 @@ export class HelloIonicPage {
         StreamingMedia.playVideo("https://youtu.be/imIIk8pRVgI", options);
     }
 
+
+    listvideo(){
+
+        var options = {
+            quality: 50,
+            //destinationType: Camera.FILE_URI,
+            sourceType: 0,
+            mediaType:1
+        };
+
+        Camera.getPicture(options).then((imageData) => {
+            // imageData is either a base64 encoded string or a file URI
+            // If it's base64:
+            let base64Image = 'data:image/jpeg;base64,' + imageData;
+            alert(imageData);
+        }, (err) => {
+            // Handle error
+        });
+
+    }
 
 }
