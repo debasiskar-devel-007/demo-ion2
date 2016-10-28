@@ -281,7 +281,7 @@ export class HelloIonicPage {
         Camera.getPicture(options).then((imageData) => {
             // imageData is either a base64 encoded string or a file URI
             // If it's base64:
-            let base64Image = 'data:image/jpeg;base64,' + imageData;
+            let base64Image:any = 'data:image/jpeg;base64,' + imageData;
             alert(imageData);
 
             (<any>window).plugins.navigator.createThumbnail(imageData, function(err, imageData1) {
@@ -297,6 +297,22 @@ export class HelloIonicPage {
             });
         }, (err) => {
             // Handle error
+        });
+
+    }
+
+    shareViaTwitter(){
+
+
+
+// Check if sharing via email is supported
+        SocialSharing.shareViaTwitter( 'message', 'image', this.imagepath).then(() => {
+            // Sharing via email is possible
+            alert("success");
+
+        }).catch(() => {
+            // Sharing via email is not possible
+            alert('error');
         });
 
     }
