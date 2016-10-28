@@ -8,6 +8,7 @@ import { SocialSharing } from 'ionic-native';
 import {InAppBrowser} from 'ionic-native';
 import {StreamingMedia, StreamingVideoOptions} from 'ionic-native';
 import { Camera } from 'ionic-native';
+import {Crop} from 'ionic-native';
 
 
 
@@ -104,7 +105,8 @@ export class HelloIonicPage {
             .then(
                 (data: MediaFile[]) => {
                     this.imagecapturepath=data[0]['fullPath'];
-                    alert(data[0]['fullPath'])
+                    alert(data[0]['fullPath']);
+                    alert(data[0]);
 
                     var x:any;
                     for(x in data[0]){
@@ -120,6 +122,24 @@ export class HelloIonicPage {
                         alert(x+'=='+err[x]);
                     }
 
+                }
+            );
+    }
+
+    opencrop(){
+        alert(9);
+
+        Crop.crop(this.imagepath, {quality: 75})
+            .then(
+
+                newImage => {
+                    this.imagepath=newImage;
+                    alert(newImage);
+                    console.log("new image path is: " + newImage),
+                        error => {
+                            alert(error);
+                            console.error("Error cropping image", error)
+                        }
                 }
             );
     }
@@ -244,16 +264,16 @@ export class HelloIonicPage {
         };
 
         //noinspection TypeScriptValidateTypes
-        //StreamingMedia.playVideo("http://torqkd.com/uploads/video/converted/1475231341_1336827052.mp4", options);
-        StreamingMedia.playVideo("https://youtu.be/imIIk8pRVgI", options);
+        StreamingMedia.playVideo("http://torqkd.com/uploads/video/converted/1475231341_1336827052.mp4", options);
+        //StreamingMedia.playVideo("https://youtu.be/imIIk8pRVgI", options);
     }
 
 
     listvideo(){
 
         var options = {
-            quality: 50,
-            //destinationType: Camera.FILE_URI,
+            quality: 90,
+            destinationType: 2,
             sourceType: 0,
             mediaType:1
         };
@@ -263,6 +283,18 @@ export class HelloIonicPage {
             // If it's base64:
             let base64Image = 'data:image/jpeg;base64,' + imageData;
             alert(imageData);
+
+            (<any>window).plugins.navigator.createThumbnail(imageData, function(err, imageData1) {
+                if (err){
+                    alert(err);
+                    throw err;
+
+                }
+
+
+                console.log(imageData1); // Will log the base64 encoded string in console.
+                alert(imageData1); // Will log the base64 encoded string in console.
+            });
         }, (err) => {
             // Handle error
         });
